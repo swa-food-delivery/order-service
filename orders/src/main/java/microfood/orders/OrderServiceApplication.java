@@ -10,13 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @EnableEurekaClient
-@RestController
 public class OrderServiceApplication {
-
-    @GetMapping(path = "/hello")
-    public String helloWorld() {
-        return "Hello World";
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(OrderServiceApplication.class, args);

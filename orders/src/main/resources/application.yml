@@ -1,11 +1,6 @@
 server:
   port: 8183
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://localhost:8181/auth/realms/microfood/protocol/openid-connect/certs
   application:
     name: orders-service
 
@@ -35,6 +30,3 @@ info:
   app:
     name: ${spring.application.name}
     version: @project.version@
-
-logging.level:
-  org.springframework.security: DEBUG
