@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  title: Orders service
+  description: Microservice for processing orders
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /orders:
+    post:
+      summary: Create a new order
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderDTO'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDTO'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorised'
+        403:
+          $ref: '#/components/responses/Forbidden'
+
+  /orders/{orderId}:
+    get:
+      summary: Get order by id
+      operationId: getOrderById
+      parameters:
+        - $ref: '#/components/parameters/OrderIdPathParameter'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDTO'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+    delete:
+      summary: Cancell order
+      operationId: cancellOrder
+      parameters:
+        - $ref: '#/components/parameters/OrderIdPathParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/Ok'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /orders/users/{userId}:
+    get:
+      summary: Get all order by user
+      operationId: getOrdersByUser
+      parameters:
+        - $ref: '#/components/parameters/UserIdPathParameter'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDTO'
+
+  /orders/restaurants/{restaurantId}:
+    get:
+      summary: Get all orders by restaurants
+      operationId: getOrdersByRestaurants
+      parameters:
+        - $ref: '#/components/parameters/RestaurantIdPathParameter'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDTO'
+
+components:
+  schemas:
+    OrderDTO:
+      type: object
+      properties:
+        orderId:
+          type: string
+          format: uuid
+        orderStatus:
+          type: string
+        userId:
+          type: string
+        restaurantId:
+          type: string
+          format: uuid
+        notes:
+          type: string
+        orderItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemDTO'
+        deliveryAddress:
+          $ref: '#/components/schemas/DeliveryAddressDTO'
+
+      required:
+        - userId
+        - restaurantId
+        - orderItems
+
+    OrderItemDTO:
+      title: Item DTO
+      type: object
+      properties:
+        itemId:
+          type: string
+          format: uuid
+        itemName:
+          type: string
+        itemPrice:
+          type: number
+        quantity:
+          type: integer
+
+    DeliveryAddressDTO:
+      type: object
+      properties:
+        address:
+          type: string
+
+
+    BadRequestExceptionDTO:
+      title: Bad request Exception
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+  responses:
+    Ok:
+      description: Ok, empty returned
+    Forbidden:
+      description: Forbiden
+    Unauthorised:
+      description: Unauthorised
+    NotFound:
+      description: Specified resource was not found
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequestExceptionDTO'
+
+  parameters:
+    OrderIdPathParameter:
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    UserIdPathParameter:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+    RestaurantIdPathParameter:
+      name: restaurantId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
