@@ -25,10 +25,6 @@ paths:
                 $ref: '#/components/schemas/OrderDTO'
         400:
           $ref: '#/components/responses/BadRequest'
-        401:
-          $ref: '#/components/responses/Unauthorised'
-        403:
-          $ref: '#/components/responses/Forbidden'
 
   /orders/{orderId}:
     get:
@@ -43,8 +39,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrderDTO'
-        403:
-          $ref: '#/components/responses/Forbidden'
         404:
           $ref: '#/components/responses/NotFound'
     delete:
@@ -57,8 +51,6 @@ paths:
           $ref: '#/components/responses/Ok'
         400:
           $ref: '#/components/responses/BadRequest'
-        403:
-          $ref: '#/components/responses/Forbidden'
         404:
           $ref: '#/components/responses/NotFound'
 
@@ -116,7 +108,10 @@ components:
           items:
             $ref: '#/components/schemas/OrderItemDTO'
         deliveryAddress:
-          $ref: '#/components/schemas/DeliveryAddressDTO'
+          type: string
+        createdOn:
+          type: string
+          format: date-time
 
       required:
         - userId
@@ -136,12 +131,6 @@ components:
           type: number
         quantity:
           type: integer
-
-    DeliveryAddressDTO:
-      type: object
-      properties:
-        address:
-          type: string
 
 
     BadRequestExceptionDTO:
