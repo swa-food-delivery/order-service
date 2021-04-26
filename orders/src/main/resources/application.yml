@@ -6,8 +6,7 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost
-    prefer-ip-address: true
+    hostname: ${ORDERS_HOST:localhost}
     instance-id: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
   client:
     service-url:
