@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import lombok.Data;
 
 @Entity
@@ -21,7 +23,8 @@ public class OrderItem {
     @GeneratedValue
     private UUID orderItemId;
 
-    @Column(name = "item_id")
+    @Column(name = "item_id", columnDefinition = "uuid")
+    @Type(type = "pg-uuid")
     private UUID itemId;
 
     @Column(name = "item_name")

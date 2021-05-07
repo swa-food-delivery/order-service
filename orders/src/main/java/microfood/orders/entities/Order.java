@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 
 import lombok.Data;
 import microfood.orders.OrderStatusEnum;
@@ -38,7 +39,8 @@ public class Order {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "restaurant_id")
+    @Column(name = "restaurant_id", columnDefinition = "uuid")
+    @Type(type = "pg-uuid")
     private UUID restaurantId;
 
     @Column(name = "delivery_address")
