@@ -1,7 +1,6 @@
 package microfood.orders.services;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +41,7 @@ public class OrderService {
 
     public OrderDTO getOrderById(UUID orderId) throws OrderNotFoundException {
         Order order = ordersRepository.getByOrderId(orderId).orElseThrow(OrderNotFoundException::new);
-        OrderDTO orderDTO = orderMapper.mapEntityToDto(order);
-        return orderDTO;
+        return orderMapper.mapEntityToDto(order);
     }
 
     public void cancelOrder(UUID orderId) throws OrdersCannotCancelException, OrderNotFoundException {
