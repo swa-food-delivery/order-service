@@ -3,7 +3,7 @@ package microfood.orders;
 public enum  OrderStatusEnum {
     REQUESTED,
     ACCEPTED,
-    PREPARING,
+    PREPARED,
     DECLINED,
     CANCELLED,
     DELIVERING,
