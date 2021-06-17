@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import microfood.orders.dtos.OrderDTO;
+import microfood.orders.dtos.OrderStatusDTO;
 import microfood.orders.exceptions.OrderNotFoundException;
+import microfood.orders.exceptions.OrderStatusException;
 import microfood.orders.exceptions.OrdersCannotCancelException;
 import microfood.orders.services.OrderService;
 
@@ -57,4 +60,10 @@ public class OrdersController {
     }
 
 
+    @PutMapping("/{orderId}/status")
+    @ResponseStatus(HttpStatus.OK)
+    public void setOrderStatus(@PathVariable UUID orderId, @RequestBody OrderStatusDTO statusDTO)
+            throws OrderNotFoundException, OrderStatusException {
+        orderService.setOrderStatus(orderId, statusDTO.getStatus());
+    }
 }

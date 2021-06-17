@@ -53,7 +53,25 @@ paths:
           $ref: '#/components/responses/BadRequest'
         404:
           $ref: '#/components/responses/NotFound'
-
+  /orders/{orderId}/status:
+    put:
+      summary: Update order status
+      operationId: setOrderStatus
+      parameters:
+        - $ref: '#/components/parameters/OrderIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderStatusDTO'
+      responses:
+        200:
+          $ref: '#/components/responses/Ok'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
   /orders/users/{userId}:
     get:
       summary: Get all order by user
@@ -88,6 +106,23 @@ paths:
 
 components:
   schemas:
+    OrderStatusEnum:
+      type: string
+      enum:
+        - REQUESTED
+        - ACCEPTED
+        - PREPARED
+        - DECLINED
+        - CANCELLED
+        - DELIVERING
+        - COMPLETED
+
+    OrderStatusDTO:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/OrderStatusEnum'
+
     OrderDTO:
       type: object
       properties:
@@ -95,7 +130,7 @@ components:
           type: string
           format: uuid
         orderStatus:
-          type: string
+          $ref: '#/components/schemas/OrderStatusEnum'
         userId:
           type: string
         restaurantId:

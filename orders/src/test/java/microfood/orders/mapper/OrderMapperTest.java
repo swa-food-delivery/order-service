@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import microfood.orders.OrderStatusEnum;
+import microfood.orders.enums.OrderStatusEnum;
 import microfood.orders.dtos.OrderDTO;
 import microfood.orders.dtos.OrderItemDTO;
 import microfood.orders.entities.Order;

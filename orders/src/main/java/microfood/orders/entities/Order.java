@@ -21,7 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
 import lombok.Data;
-import microfood.orders.OrderStatusEnum;
+import microfood.orders.enums.OrderStatusEnum;
 
 @Entity
 @Table(name = "ORDERS")

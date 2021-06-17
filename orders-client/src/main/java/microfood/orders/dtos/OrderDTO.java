@@ -7,7 +7,7 @@ import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import microfood.orders.OrderStatusEnum;
+import microfood.orders.enums.OrderStatusEnum;
 
 @Data
 @AllArgsConstructor

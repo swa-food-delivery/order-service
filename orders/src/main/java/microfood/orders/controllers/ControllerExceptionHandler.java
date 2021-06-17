@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import microfood.orders.dtos.BadRequestDTO;
 import microfood.orders.dtos.InternalErrorDTO;
 import microfood.orders.exceptions.OrderNotFoundException;
+import microfood.orders.exceptions.OrderStatusException;
 import microfood.orders.exceptions.OrdersCannotCancelException;
 
 @ControllerAdvice
@@ -24,7 +25,7 @@ public class ControllerExceptionHandler {
 
     }
 
-    @ExceptionHandler({OrdersCannotCancelException.class})
+    @ExceptionHandler({OrdersCannotCancelException.class, OrderStatusException.class})
     public ResponseEntity<BadRequestDTO> handleBadRequestException(Exception e) {
         return new ResponseEntity<>(new BadRequestDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
