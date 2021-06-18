@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients(basePackages = "microfood.tickets.client")
+@EnableFeignClients(basePackages = {"microfood.tickets.client", "microfood.restaurants.client"})
 public class OrderServiceApplication {
 
     public static void main(String[] args) {

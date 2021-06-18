@@ -3,6 +3,8 @@ package microfood.orders.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import microfood.orders.exceptions.MenuValidationFailedException;
+import microfood.restaurants.exceptions.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +37,7 @@ public class OrdersController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDTO createOrder(@RequestBody OrderDTO orderDTO) {
+    public OrderDTO createOrder(@RequestBody OrderDTO orderDTO) throws RestaurantNotFoundException, MenuValidationFailedException {
         return orderService.createOrder(orderDTO);
     }
 

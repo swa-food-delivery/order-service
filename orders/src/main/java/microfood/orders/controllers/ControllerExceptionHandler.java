@@ -1,5 +1,6 @@
 package microfood.orders.controllers;
 
+import microfood.orders.exceptions.MenuValidationFailedException;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -25,7 +26,7 @@ public class ControllerExceptionHandler {
 
     }
 
-    @ExceptionHandler({OrdersCannotCancelException.class, OrderStatusException.class})
+    @ExceptionHandler({OrdersCannotCancelException.class, OrderStatusException.class, MenuValidationFailedException.class})
     public ResponseEntity<BadRequestDTO> handleBadRequestException(Exception e) {
         return new ResponseEntity<>(new BadRequestDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
