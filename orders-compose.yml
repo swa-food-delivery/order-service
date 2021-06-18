@@ -2,7 +2,7 @@ version: "3.9"
 services:
   orders-db:
     image: postgres:latest
-    container_name: orders-db
+    container_name: orders-db-test
     ports:
       - 8283:8080
       - 54323:5432
