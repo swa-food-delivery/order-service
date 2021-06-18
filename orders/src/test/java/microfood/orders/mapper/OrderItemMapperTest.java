@@ -26,7 +26,7 @@ public class OrderItemMapperTest {
     public void testMapEntityToDto() {
         OrderItem item = new OrderItem();
         item.setOrderItemId(UUID.randomUUID());
-        item.setItemId(UUID.randomUUID());
+        item.setItemId(3224);
         item.setItemName("item name");
         item.setItemPrice(1.75);
         item.setItemQuantity(2);
@@ -42,7 +42,7 @@ public class OrderItemMapperTest {
     @Test
     public void testMapDtoToEntity() {
         OrderItemDTO item = new OrderItemDTO();
-        item.setItemId(UUID.randomUUID());
+        item.setItemId(3224);
         item.setItemName("item name");
         item.setItemPrice(1.75);
         item.setQuantity(2);

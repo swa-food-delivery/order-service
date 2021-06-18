@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import microfood.orders.dtos.OrderStatusDTO;
 
-@FeignClient(name = "orders-service")
+@FeignClient(name = "orders-service", fallback = OrdersClientFallback.class)
 public interface OrdersClient {
     @RequestMapping(method = RequestMethod.PUT, value = "/orders/{orderId}/status", consumes = "application/json")
     void setOrderStatus(@PathVariable UUID orderId, OrderStatusDTO status);

@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS ORDER_ITEMS
 (
     order_item_id uuid          NOT NULL PRIMARY KEY,
     order_id      uuid          NOT NULL,
-    item_id       uuid          NOT NULL,
+    item_id       integer          NOT NULL,
     item_name     VARCHAR(120) NOT NULL,
     item_price    NUMERIC       NOT NULL,
     item_quantity INTEGER       NOT NULL,

@@ -48,7 +48,7 @@ public class OrderMapperTest {
         OrderItem item = new OrderItem();
         item.setOrderItemId(UUID.randomUUID());
 //        item.setOrderId(UUID.randomUUID());
-        item.setItemId(UUID.randomUUID());
+        item.setItemId(2342);
         item.setItemName("item name");
         item.setItemPrice(1.75);
         item.setItemQuantity(2);
@@ -83,7 +83,7 @@ public class OrderMapperTest {
         orderDTO.setCreatedOn(new Date(System.currentTimeMillis()));
 
         OrderItemDTO itemDTO = new OrderItemDTO();
-        itemDTO.setItemId(UUID.randomUUID());
+        itemDTO.setItemId(444);
         itemDTO.setItemName("item name");
         itemDTO.setItemPrice(1.75);
         itemDTO.setQuantity(2);
