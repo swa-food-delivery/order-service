@@ -4,15 +4,14 @@ spring:
   datasource:
     initialization-mode: always
     schema: classpath:/schema.sql
-    url: jdbc:postgresql://${ORDERS_DB_HOST:localhost}:${ORDERS_DB_PORT:5432}/postgres
-    username: "postgres"
-    password: "admin"
+    url: jdbc:postgresql://${ORDERS_DB_HOST:localhost}:${ORDERS_DB_PORT:54323}/orders
+    username: "orders"
+    password: "orders"
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        generate-ddl: true
-        ddl-auto: create-drop
+        ddl-auto: none
   application:
     name: orders-service
 
