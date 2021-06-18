@@ -2,7 +2,13 @@ package microfood.orders.services;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import microfood.orders.dtos.OrderItemDTO;
+import microfood.orders.exceptions.MenuValidationFailedException;
+import microfood.restaurants.client.RestaurantsClient;
+import microfood.restaurants.dto.FoodDTO;
+import microfood.restaurants.exceptions.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,25 +33,42 @@ public class OrderService {
     private final OrderItemsRepository orderItemsRepository;
     private final OrderMapper orderMapper;
     private final RestaurantTicketsClient ticketsClient;
+    private final RestaurantsClient restaurantsClient;
 
     @Autowired
     public OrderService(OrdersRepository ordersRepository, OrderMapper orderMapper,
                         OrderItemsRepository orderItemsRepository,
-                        RestaurantTicketsClient ticketsClient) {
+                        RestaurantTicketsClient ticketsClient,
+                        RestaurantsClient restaurantsClient) {
         this.ordersRepository = ordersRepository;
         this.orderItemsRepository = orderItemsRepository;
         this.orderMapper = orderMapper;
         this.ticketsClient = ticketsClient;
+        this.restaurantsClient = restaurantsClient;
     }
 
-    public OrderDTO createOrder(OrderDTO orderDTO) {
-        // TODO: add validation
+    public OrderDTO createOrder(OrderDTO orderDTO) throws RestaurantNotFoundException, MenuValidationFailedException {
+        //order validation
+        //I absolutely hate this, it's so bad I am probably going to get told to switch fields while I can
+        if (!validateMenu(orderDTO, restaurantsClient.getMenu(orderDTO.getRestaurantId()))) {
+            throw new MenuValidationFailedException("The order you're trying to submit contains food not available at the restaurant");
+        }
+
         orderDTO.setOrderStatus(OrderStatusEnum.REQUESTED);
         Order order = orderMapper.mapDtoToEntity(orderDTO);
         Order createdOrder = ordersRepository.save(order);
         TicketBaseDTO ticketBaseDTO = new TicketBaseDTO(null, order.getOrderId());
         ticketsClient.createTicket(orderDTO.getRestaurantId(), ticketBaseDTO);
         return orderMapper.mapEntityToDto(createdOrder);
+    }
+
+    private boolean validateMenu(OrderDTO orderDTO, List<FoodDTO> menu) {
+        List<OrderItemDTO> items = orderDTO.getOrderItems();
+        List<String> check = menu.stream().map(FoodDTO::getName).collect(Collectors.toList());
+        for (OrderItemDTO item : items) {
+            if (!check.contains(item.getItemName())) return false;
+        }
+        return true;
     }
 
     public OrderDTO getOrderById(UUID orderId) throws OrderNotFoundException {
