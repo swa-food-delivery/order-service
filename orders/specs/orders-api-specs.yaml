@@ -158,8 +158,7 @@ components:
       type: object
       properties:
         itemId:
-          type: string
-          format: uuid
+          type: integer
         itemName:
           type: string
         itemPrice:

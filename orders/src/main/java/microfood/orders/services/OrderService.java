@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import microfood.orders.dtos.OrderItemDTO;
 import microfood.orders.exceptions.MenuValidationFailedException;
 import microfood.restaurants.client.RestaurantsClient;
@@ -26,6 +27,7 @@ import microfood.tickets.client.RestaurantTicketsClient;
 import microfood.tickets.dtos.TicketBaseDTO;
 
 @Service
+@Slf4j
 @Transactional
 public class OrderService {
 
@@ -59,6 +61,8 @@ public class OrderService {
         Order createdOrder = ordersRepository.save(order);
         TicketBaseDTO ticketBaseDTO = new TicketBaseDTO(null, order.getOrderId());
         ticketsClient.createTicket(orderDTO.getRestaurantId(), ticketBaseDTO);
+        log.info("CREATED ORDER " + createdOrder.getOrderId() + " FOR USER " + createdOrder.getUsername() +
+                "IN A RESTAURANT WITH AN ID: " + orderDTO.getRestaurantId());
         return orderMapper.mapEntityToDto(createdOrder);
     }
 
@@ -66,7 +70,11 @@ public class OrderService {
         List<OrderItemDTO> items = orderDTO.getOrderItems();
         List<String> check = menu.stream().map(FoodDTO::getName).collect(Collectors.toList());
         for (OrderItemDTO item : items) {
-            if (!check.contains(item.getItemName())) return false;
+            if (!check.contains(item.getItemName())) {
+
+                log.info("ORDER VALIDATION FOR USER " + orderDTO.getUserId() + " FAILED. THE ORDER CONTAINS ITEM NOT ON THE MENU: " + item.getItemName());
+                return false;
+            }
         }
         return true;
     }
