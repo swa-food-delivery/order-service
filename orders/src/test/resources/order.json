@@ -1,0 +1,28 @@
+{
+  "orderId": null,
+  "orderStatus": null,
+  "userId": "user1",
+  "restaurantId": "cc81f348-e739-43ec-b973-56ea41843b74",
+  "notes": "Some notes",
+  "orderItems": [
+    {
+      "itemId": 1,
+      "itemName": "Cheeseburger",
+      "itemPrice": 1.75,
+      "quantity": 2
+    },
+    {
+      "itemId": 2,
+      "itemName": "Cola",
+      "itemPrice": 0.33,
+      "quantity": 2
+    },
+    {
+      "itemId": 3,
+      "itemName": "Fries",
+      "itemPrice": 1.00,
+      "quantity": 2
+    }
+  ],
+  "deliveryAddress": "Tusarova 18"
+}

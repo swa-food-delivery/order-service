@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Cheeseburger",
+    "resId": "cc81f348-e739-43ec-b973-56ea41843b74"
+  },
+  {
+    "id": 2,
+    "name": "Cola",
+    "resId": "cc81f348-e739-43ec-b973-56ea41843b74"
+  },
+  {
+    "id": 3,
+    "name": "Fries",
+    "resId": "cc81f348-e739-43ec-b973-56ea41843b74"
+  }
+]

@@ -10,6 +10,7 @@ import microfood.orders.exceptions.MenuValidationFailedException;
 import microfood.restaurants.client.RestaurantsClient;
 import microfood.restaurants.dto.FoodDTO;
 import microfood.restaurants.exceptions.RestaurantNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,11 +105,13 @@ public class OrderService {
     }
 
     public void setOrderStatus(UUID orderId, OrderStatusEnum status) throws OrderNotFoundException, OrderStatusException {
+        log.info("Updating order status, for order: {}", orderId);
         Order order = ordersRepository.getByOrderId(orderId).orElseThrow(OrderNotFoundException::new);
         if (order.getOrderStatus().getNextStates().contains(status)) {
             order.setOrderStatus(status);
             ordersRepository.save(order);
         } else {
+            log.error("Order status update failed for order: {}", orderId);
             throw new OrderStatusException(String.format("Cannot change order status from %s to %s",
                     order.getOrderStatus(), status));
         }
